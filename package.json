@@ -1,0 +1,12 @@
+{
+  "name"         : "node-steam-bot",
+  "version"      : "0.0.1",
+  "description"  : "Scrape the web and send some messages.",
+  "main"         : "bot.js",
+  "author"       : "Pontus",
+  "dependencies" : {
+    "request"    : "latest",
+    "cheerio"    : "latest",
+    "steam"    : "latest"
+  }
+}
