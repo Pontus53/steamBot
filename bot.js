@@ -6,6 +6,7 @@ var readline = require('readline');
 var bot = new Steam.SteamClient();
 
 var counter = 0;
+var mostRecentSteamID;
 
 console.log("Starting the bot and will attempt to login.");
 bot.setMaxListeners(0);
@@ -51,18 +52,17 @@ function chat(steamID) {
 
 		bot.on('friend', function(friendID, relationship) {
 			if (friendID == steamID && relationship == 3 && relationship != 0) {
-				if (relationship != 0) {
-					bot.sendMessage(steamID, 'Hi man! :)', Steam.EChatEntryType.ChatMsg);
-					bot.on('message', function(source, message, type, chatter) {
-						if (message != '') {
-							console.log('Received message: ' + message);
-							bot.sendMessage(source, 'Saw your profile at CSGOLounge. Are you interested in our newly released CSGO cheat, http://project7.airforsteam.net or our Steam UI skin, http://airforsteam.net ?', Steam.EChatEntryType.ChatMsg);
-							bot.removeFriend(steamID);
-							counter = counter + 1;
-							console.log("[COUNTER] Message sent to " + counter + " users.");
-						};
-					});
-				};
+				bot.sendMessage(steamID, 'Hi man! :)', Steam.EChatEntryType.ChatMsg);
+				bot.on('message', function(source, message, type, chatter) {
+					if (message != '' && steamID != mostRecentSteamID) {
+						console.log('Received message: ' + message);
+						sendChatMessage(source);
+						mostRecentSteamID = steamID;
+						setTimeout(function() {bot.removeFriend(steamID);}, 5000);
+						counter = counter + 1;
+						console.log("[COUNTER] Message sent to " + counter + " users.");
+					};
+				});
 			} 
 			else {
 				chat(steamID);
@@ -71,7 +71,12 @@ function chat(steamID) {
 	});
 }
 
-
+function sendChatMessage(source) {
+	bot.sendMessage(source, 'Saw your profile at CSGOLounge :)', Steam.EChatEntryType.ChatMsg);
+	bot.sendMessage(source, "I'm wondering if you are interested in one of our products?", Steam.EChatEntryType.ChatMsg);
+	bot.sendMessage(source, 'CSGO cheat: http://project7.airforsteam.net', Steam.EChatEntryType.ChatMsg);
+	bot.sendMessage(source, 'Steam UI skin: http://airforsteam.net', Steam.EChatEntryType.ChatMsg);
+}
 
 /*
 var rl = readline.createInterface({
