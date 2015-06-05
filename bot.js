@@ -15,8 +15,8 @@ scrape();
 function logOn() {
 	//login
 	bot.logOn({
-  		accountName: '',
- 		password: ''
+  		accountName: 'magicka53',
+ 		password: '1dqqd1'
 	});
 
 	//handle logon errors
@@ -52,7 +52,7 @@ function chat(steamID) {
 				if (relationship != 0) {
 					bot.sendMessage(steamID, 'Hi man! :)', Steam.EChatEntryType.ChatMsg);
 					bot.on('message', function(source, message, type, chatter) {
-						if (!message == '') {
+						if (message != '') {
 							console.log('Received message: ' + message);
 							bot.sendMessage(source, 'Saw your profile at CSGOLounge. Are you interested in our newly released CSGO cheat, http://project7.airforsteam.net or our Steam UI skin, http://airforsteam.net ?', Steam.EChatEntryType.ChatMsg);
 							bot.removeFriend(steamID);
