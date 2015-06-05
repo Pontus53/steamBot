@@ -36,7 +36,9 @@ function logOn() {
 
 function scrape() {
 	chat("76561198021869935");
-	chat("76561198047648275");
+	/*chat("76561198047648275");
+	chat("76561198022207633");
+	chat("76561198070455731");*/
 }
 
 //add steam id and chat some
@@ -48,7 +50,7 @@ function chat(steamID) {
 		bot.addFriend(steamID);
 
 		bot.on('friend', function(friendID, relationship) {
-			if (friendID == steamID && relationship == 3) {
+			if (friendID == steamID && relationship == 3 && relationship != 0) {
 				if (relationship != 0) {
 					bot.sendMessage(steamID, 'Hi man! :)', Steam.EChatEntryType.ChatMsg);
 					bot.on('message', function(source, message, type, chatter) {
